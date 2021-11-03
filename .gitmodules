@@ -1,0 +1,9 @@
+[submodule "samples/django-sample"]
+	path = samples/django-sample
+	url = git@github.com:sota0121/django-sample.git
+[submodule "samples/fastapi-sample"]
+	path = samples/fastapi-sample
+	url = git@github.com:sota0121/fastapi-sample.git
+[submodule "samples/k8s-official-examples"]
+	path = samples/k8s-official-examples
+	url = git@github.com:kubernetes/examples.git

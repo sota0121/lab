@@ -1,0 +1,3 @@
+[submodule "samples/django-sample"]
+	path = samples/django-sample
+	url = git@github.com:sota0121/django-sample.git

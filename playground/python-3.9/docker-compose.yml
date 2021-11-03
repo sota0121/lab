@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  python:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: py39
+    command: python main.py compose-sample
+    volumes:
+      - ./code:/code

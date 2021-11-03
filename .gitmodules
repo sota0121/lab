@@ -1,3 +1,6 @@
 [submodule "samples/django-sample"]
 	path = samples/django-sample
 	url = git@github.com:sota0121/django-sample.git
+[submodule "samples/fastapi-sample"]
+	path = samples/fastapi-sample
+	url = git@github.com:sota0121/fastapi-sample

@@ -4,3 +4,6 @@
 [submodule "samples/fastapi-sample"]
 	path = samples/fastapi-sample
 	url = git@github.com:sota0121/fastapi-sample
+[submodule "k8s-official-examples"]
+	path = k8s-official-examples
+	url = git@github.com:kubernetes/examples.git

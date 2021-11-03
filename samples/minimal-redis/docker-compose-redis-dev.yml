@@ -1,0 +1,12 @@
+version: '2.3'
+
+services:
+  ## REDIS-Server
+  redis-server:
+    image: redis:6.2.1
+    container_name: redis-server-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    restart: always

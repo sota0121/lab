@@ -10,3 +10,6 @@
 [submodule "samples/python-grpc-demo"]
 	path = samples/python-grpc-demo
 	url = git@github.com:amitsaha/python-grpc-demo.git
+[submodule "samples/play-rtsp-stream-py"]
+	path = samples/play-rtsp-stream-py
+	url = git@github.com:sota0121/play-rstp-stream-py.git

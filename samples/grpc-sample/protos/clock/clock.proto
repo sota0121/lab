@@ -1,0 +1,6 @@
+syntax = "proto3";
+import "clock_types.proto";
+
+service Clock {
+    rpc GetTime(clock.GetClockRequest) returns (clock.CommonResponse);
+}

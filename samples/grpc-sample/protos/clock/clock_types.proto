@@ -1,0 +1,18 @@
+syntax = "proto3";
+package clock;
+
+import "google/protobuf/timestamp.proto";
+
+message TimeInfo {
+    string timezone = 1;
+    string greeting = 2;
+    google.protobuf.Timestamp ts = 3;
+}
+
+message GetClockRequest {
+    string greeting = 1;
+}
+
+message CommonResponse {
+    TimeInfo tm = 1;
+}

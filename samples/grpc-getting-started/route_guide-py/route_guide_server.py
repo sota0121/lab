@@ -61,6 +61,7 @@ class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
         self.db = route_guide_resources.read_route_guide_database()
 
     def GetFeature(self, request, context):
+        logging.debug(f"{self.GetFeature.__name__} is called ! ({request})")
         feature = get_feature(self.db, request)
         if feature is None:
             return route_guide_pb2.Feature(name="", location=request)
@@ -68,6 +69,7 @@ class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
             return feature
 
     def ListFeatures(self, request, context):
+        logging.debug(f"{self.ListFeatures.__name__} is called ! ({request})")
         left = min(request.lo.longitude, request.hi.longitude)
         right = max(request.lo.longitude, request.hi.longitude)
         top = max(request.lo.latitude, request.hi.latitude)
@@ -80,6 +82,7 @@ class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
                 yield feature
 
     def RecordRoute(self, request_iterator, context):
+        logging.debug(f"{self.RecordRoute.__name__} is called ! ({request_iterator})")
         point_count = 0
         feature_count = 0
         distance = 0.0
@@ -101,10 +104,14 @@ class RouteGuideServicer(route_guide_pb2_grpc.RouteGuideServicer):
                                             elapsed_time=int(elapsed_time))
 
     def RouteChat(self, request_iterator, context):
+        logging.debug(f"{self.RouteChat.__name__} is called ! ({request_iterator})")
         prev_notes = []
         for new_note in request_iterator:
+            time.sleep(1)
             for prev_note in prev_notes:
+                time.sleep(1)
                 if prev_note.location == new_note.location:
+                    logging.debug(f'yield prev_note = {prev_note}')
                     yield prev_note
             prev_notes.append(new_note)
 

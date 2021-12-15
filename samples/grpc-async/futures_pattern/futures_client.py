@@ -33,17 +33,31 @@ def run_workers(num_of_workers: int=1):
         - https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.as_completed
     """
     _futures = []
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        for i in range(num_of_workers):
-            _future = executor.submit(run_request, i)
+    # Pattern 1 : Successfully Done.
+    # with ThreadPoolExecutor(max_workers=10) as executor:
+    #     for i in range(num_of_workers):
+    #         _future = executor.submit(run_request, i)
+    #         _futures.append(_future)
+    #     for f in as_completed(_futures):
+    #         try:
+    #             result = f.result()
+    #         except Exception as e:
+    #             print(f'generated exception {repr(e)}')
+    #         else:
+    #             print(result)
+
+    # Pattern 2 : Successfully Done.
+    _executor = ThreadPoolExecutor(max_workers=10)
+    for i in range(num_of_workers):
+            _future = _executor.submit(run_request, i)
             _futures.append(_future)
-        for f in as_completed(_futures):
-            try:
-                result = f.result()
-            except Exception as e:
-                print(f'generated exception {repr(e)}')
-            else:
-                print(result)
+    for f in as_completed(_futures):
+        try:
+            result = f.result()
+        except Exception as e:
+            print(f'generated exception {repr(e)}')
+        else:
+            print(result)
 
 
 if __name__ == '__main__':

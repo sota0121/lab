@@ -43,14 +43,45 @@ app2_logger.addHandler(common_handler)
 class MyLoggerWrapper:
     def __init__(self, name: str=None, level: int=logging.DEBUG) -> None:
         # set up handler
-        self.formatter = logging.Formatter('%(asctime)s:%(name)s:%(levelname)s:%(message)s')
-        self.console_handler = logging.StreamHandler()
-        self.console_handler.setLevel(level=level)
-        self.console_handler.setFormatter(self.formatter)
+        _formatter = logging.Formatter(
+            "{'ts':%(asctime)s, 'logger':%(name)s, 'level':%(levelname)s, 'file':%(filename)s, 'module':%(module)s, 'func':%(funcName)s, 'ver_id':%(ver_id)d, 'user_id':%(user_id)d, 'msg':%(message)s}"
+        )
+        _console_handler = logging.StreamHandler()
+        _console_handler.setLevel(level=level)
+        _console_handler.setFormatter(_formatter)
         # set up logger
         self._logger = logging.getLogger(name=name)
         self._logger.setLevel(level=level)
-        self._logger.addHandler(self.console_handler)
+        self._logger.addHandler(_console_handler)
+
+    @classmethod
+    def extra(cls, ver_id: int, user_id: int):
+        """make dict for log(... extra={})
+
+            ### How to use
+
+            ```python
+            # my_logger.py
+            _logger = MyLoggerWrapper(name='proc_1', level=logging.DEBUG)
+            # ---
+            # xxx.py
+            _logger = logging.getLogger('proc_1')
+            ver_id = 1
+            user_id = 2
+            _logger.info("started to process", extra=MyLoggerWrapper.extra(ver_id, user_id))
+            ```
+
+
+        """
+        dict_for_extra = {
+            'ver_id': ver_id,
+            'user_id': user_id
+        }
+        return dict_for_extra
+
+    @classmethod
+    def fmt_msg_trial(cls, custom: int) -> dict:
+        return {'custom': custom}
 
     @property
     def logger(self):

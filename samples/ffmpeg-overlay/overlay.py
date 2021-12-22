@@ -87,6 +87,7 @@ def main():
         ffmpeg
         .overlay(in_file, overlay_file, x=org_x, y=org_y, eof_action='repeat', format='yuv420')
         .output('./data/output-from-py.mp4')
+        .overwrite_output()
         .run()
     )
 

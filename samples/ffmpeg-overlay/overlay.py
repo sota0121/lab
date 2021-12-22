@@ -1,8 +1,9 @@
 import sys
-from typing import Tuple
+from typing import Tuple, Final
 
 import ffmpeg
 
+BUFF_IMG_PX: Final[int] = 25
 
 # https://github.com/kkroening/ffmpeg-python/blob/master/README.md
 
@@ -37,7 +38,7 @@ def calc_org_point(pos_type: int, base_h: int, base_w: int, over_h: int, over_w:
         ## Note
         - origin(x=0, y=0) means top left of the base video
     """
-    buff = 5 # buffer in px
+    buff = BUFF_IMG_PX # buffer in px
     x = 0 + buff
     y = 0 + buff
     if pos_type == 0: # top left

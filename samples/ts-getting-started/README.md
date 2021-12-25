@@ -83,3 +83,23 @@ npm install --save-dev webpack webpack-cli typescript ts-loader
 ./node_modules/typescript/bin/tsc --init
 ```
 
+> webpackの設定であるwebpack.config.jsを作成します。
+
+```js
+module.exports = {
+    entry: './src/index.ts',
+    target: 'node',
+    module: {rules: [
+      {
+        test: /\.ts$/,
+        use: ['ts-loader'],
+        exclude: /node_modules/
+      }
+    ]
+  },
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ]
+  }
+};
+```
+

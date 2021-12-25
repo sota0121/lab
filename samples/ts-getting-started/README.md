@@ -76,4 +76,10 @@ npm install --save-dev webpack webpack-cli typescript ts-loader
 > package.json will be updated
 ```
 
+> TypeScriptの設定であるtsconfig.jsonを作成します。
+> 手動で作成しても良いですが、$ tsc --initで自動生成することもできます。
+
+```
+./node_modules/typescript/bin/tsc --init
+```
 

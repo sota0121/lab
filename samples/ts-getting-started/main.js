@@ -1,2 +1,12 @@
 var message = 'Hello, World!';
 console.log(message);
+var now_dt = new Date();
+console.log('now_dt - ');
+console.log(now_dt);
+var now_dt_ut = Date.now();
+console.log('now_dt unix time - ');
+console.log(now_dt_ut);
+var target_date = new Date(2021, (12 - 1), (24 - 1), 2);
+console.log('target date - ');
+console.log(target_date);
+console.log(target_date.getTimezoneOffset());

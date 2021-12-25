@@ -129,7 +129,7 @@ code src/index.ts
 ```
 
 
-### build and run
+#### build
 
 ```
 npm run build
@@ -170,3 +170,42 @@ asset main.js 1.5 KiB [emitted] (name: main)
 webpack 5.65.0 compiled successfully in 1851 ms
 ```
 
+#### run
+
+exec js
+
+```
+node dist/main.js 3
+> Fizz
+```
+
+
+#### Make CLI Package with npm
+
+Update package.json
+
+```json
++  "bin": {
++    "ts-cat": "./bin/ts-cat.js"
++  },
+```
+
+Make bin/*.js
+
+```js
+#!/usr/bin/env node
+require('../dist/main.js');
+```
+
+> $ npm linkコマンドを使うと、このプロジェクトに対してシンボリックリンクを貼り、ローカルでnpm moduleをglobal installしたかのように使えるようになります。
+
+```
+npm link
+```
+
+```
+ts-cat 4
+> 4
+ts-cat 3
+> Fizz
+```

@@ -118,5 +118,20 @@ mkdir src
 code src/index.ts
 ```
 
+#### Prepare to build
 
+> webpackでビルドするnpm scriptを記述します。
+(It looks like Makefile ...)
+
+```json
+   "scripts": {
++    "build": "webpack",
+```
+
+
+### build and run
+
+```
+npm run build
+```
 

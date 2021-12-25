@@ -133,5 +133,40 @@ code src/index.ts
 
 ```
 npm run build
+> dist/index.js will be made
+
+
+asset main.js 144 bytes [emitted] [minimized] (name: main)
+./src/index.ts 300 bytes [built] [code generated]
+
+WARNING in configuration
+The 'mode' option has not been set, webpack will fallback to 'production' for this value.
+Set 'mode' option to 'development' or 'production' to enable defaults for each environment.
+You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/configuration/mode/
+```
+
+I got 1 warning.
+
+set `mode` option in `webpack.config.js`
+
+ref : https://webpack.js.org/configuration/mode/
+
+```js
+module.exports = {
+    mode: 'development',
+};
+```
+
+Successfully built
+
+```bash
+$ npm run build
+
+> ts-cat@1.0.0 build
+> webpack
+
+asset main.js 1.5 KiB [emitted] (name: main)
+./src/index.ts 300 bytes [built] [code generated]
+webpack 5.65.0 compiled successfully in 1851 ms
 ```
 

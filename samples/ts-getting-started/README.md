@@ -103,3 +103,20 @@ module.exports = {
 };
 ```
 
+#### Coding
+
+install nodejs's types
+
+```
+npm install --save-dev @types/node
+```
+
+make code's dir
+
+```
+mkdir src
+code src/index.ts
+```
+
+
+

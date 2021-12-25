@@ -1,11 +1,12 @@
-# Tutorial
+# Getting started
 
-## Resources
+## Tutorial Notes
+
+### Resources
 
 https://www.typescripttutorial.net/
 
-
-## Notes
+### Note
 
 install ts compiler globally
 
@@ -31,6 +32,48 @@ ts-node main.ts
 # out>Hello, World!
 ```
 
+## Create CLI with TypeScript
 
+### Resources
+
+https://qiita.com/suzuki_sh/items/f3349efbfe1bdfc0c634
+
+### Note
+
+setup
+
+```bash
+mkdir ts-cat
+cd ts-cat
+#git init
+curl https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore > .gitignore
+```
+
+#### create ts build env with webpack
+
+make package.json
+
+```
+npm init
+> package name: (ts-cat)
+> version: (1.0.0)
+> description: cat command in typescript
+> entry point: (index.js)
+> test command:
+> git repository:
+> keywords:
+> author: sota_masuda
+> license: (ISC) MIT
+```
+
+> TypeScriptと、ビルドするために必要なパッケージを、devDependenciesでインストールします。
+> 今回はwebpackを使うため、ts-loaderもインストールします。
+
+```
+npm install --save-dev webpack webpack-cli typescript ts-loader
+> node_modules/ will be made
+> package-lock.json will be maide
+> package.json will be updated
+```
 
 

@@ -19,3 +19,7 @@ console.log('target date - ')
 console.log(target_date_s)
 console.log(target_date_s.getTimezoneOffset())
 
+const target_date_s_emp: Date = new Date(NaN)
+console.log('target_date_s_emp - ')
+console.log(target_date_s_emp)
+console.log(target_date_s_emp.getTimezoneOffset())

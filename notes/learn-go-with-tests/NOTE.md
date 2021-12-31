@@ -55,3 +55,35 @@ PATHを通す必要がありそう。
 `$GOBIN/godoc -http :8000`
 
 
+## 要件を追加 - Update Test
+
+- Hello( name: string )
+- return "Hello $name"
+
+となるように修正する。
+
+まずは、テストを修正する。
+
+```go
+func TestHello(t *testing.T) {
+	got := Hello("Sota")
+	want := "Hello, Sota"
+
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}
+```
+
+テストを実行すると失敗する。
+
+```bash
+# github.com/sota0121/lab/notes/learn-go-with-tests/helloworld [github.com/sota0121/lab/notes/learn-go-with-tests/helloworld.test]
+./main_test.go:6:14: too many arguments in call to Hello
+        have (string)
+        want ()
+FAIL    github.com/sota0121/lab/notes/learn-go-with-tests/helloworld [build failed]
+```
+
+
+

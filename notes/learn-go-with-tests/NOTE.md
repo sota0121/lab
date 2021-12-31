@@ -85,5 +85,7 @@ func TestHello(t *testing.T) {
 FAIL    github.com/sota0121/lab/notes/learn-go-with-tests/helloworld [build failed]
 ```
 
+## Testが通るように関数を修正する
+
 
 

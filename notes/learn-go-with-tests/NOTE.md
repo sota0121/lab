@@ -288,3 +288,9 @@ func greetingPrefix(language string) (prefix string) {
 
 
 ### Check test
+
+```bash
+$ go test
+PASS
+ok      github.com/sota0121/lab/notes/learn-go-with-tests/helloworld    0.474s
+```

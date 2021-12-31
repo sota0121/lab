@@ -87,5 +87,31 @@ FAIL    github.com/sota0121/lab/notes/learn-go-with-tests/helloworld [build fail
 
 ## Testが通るように関数を修正する
 
+## 要件2 : 引数が空文字の場合は Hello World
 
+test
+
+```go
+func TestHello(t *testing.T) {
+
+    t.Run("saying hello to people", func(t *testing.T) {
+        got := Hello("Chris")
+        want := "Hello, Chris"
+
+        if got != want {
+            t.Errorf("got %q want %q", got, want)
+        }
+    })
+
+    t.Run("say 'Hello, World' when an empty string is supplied", func(t *testing.T) {
+        got := Hello("")
+        want := "Hello, World"
+
+        if got != want {
+            t.Errorf("got %q want %q", got, want)
+        }
+    })
+
+}
+```
 

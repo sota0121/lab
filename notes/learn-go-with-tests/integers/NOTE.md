@@ -50,7 +50,7 @@ func Add(x, y int) int {
 
 ```bash
 --- FAIL: TestAdder (0.00s)
-    adder_test.go:10: expected '4' but got '0' 
+    adder_test.go:10: expected '4' but got '0'
 FAIL
 exit status 1
 FAIL    github.com/sota0121/lab/notes/learn-go-with-tests/integers      0.494s
@@ -89,6 +89,22 @@ ok      github.com/sota0121/lab/notes/learn-go-with-tests/integers      0.495s
 // Add takes two integers and returns the sum of them.
 func Add(x, y int) int {
     return x + y
+}
+```
+
+## Example 機能を利用する
+
+ref : [Testable Example in Go](https://go.dev/blog/examples)
+
+Goでは実際に挙動をテストできるExample機能がある。テストスクリプトに記述する。
+
+```go
+// adder_test.go
+
+func ExampleAdd() {
+    sum := Add(1, 5)
+    fmt.Println(sum)
+    // Output: 6
 }
 ```
 

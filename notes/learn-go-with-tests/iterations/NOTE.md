@@ -89,3 +89,36 @@ func Repeat(char string, repeat_number int) (repeated string) {
 }
 ```
 
+## Add Benchmark
+
+テストと同じ感じで関数の実行速度を計測してくれるベンチマークという仕組みもあるらしい。
+
+
+```go
+// repeat_test.go
+
+func BenchmarkRepeat(b *testing.B) {
+    for i := 0; i < b.N; i++ {
+        Repeat("a")
+    }
+}
+```
+
+`b.N` は、暗号的に設定されている計測回数。Go言語のフレームワークが適切な計測回数を勝手に計算してくれるらしい。
+
+Benchmark の実行方法は、 `go test -bench=.`
+
+```bash
+$ go test -bench=.
+
+goos: darwin
+goarch: amd64
+pkg: github.com/sota0121/lab/notes/learn-go-with-tests/iterations
+cpu: VirtualApple @ 2.50GHz
+BenchmarkRepeat-8       13417578                88.33 ns/op
+PASS
+ok      github.com/sota0121/lab/notes/learn-go-with-tests/iterations    1.740s
+```
+
+13417578 回計測されて、1処理の平均が 88.33 ns である。
+

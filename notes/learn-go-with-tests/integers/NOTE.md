@@ -105,7 +105,11 @@ func ExampleAdd() {
     sum := Add(1, 5)
     fmt.Println(sum)
     // Output: 6
+    // ↑↑ このコメントがないとコンパイルしかされない。テスト時に実行されない。
 }
 ```
 
+doc 上ではこんな感じで表示される。
+
+![img](img/doc00.png)
 

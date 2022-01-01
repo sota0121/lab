@@ -1,0 +1,6 @@
+{
+    "go.formatTool": "gofmt",
+    "gopls": {
+        "experimentalWorkspaceModule": true,
+    }
+}

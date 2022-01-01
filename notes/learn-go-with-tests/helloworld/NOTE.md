@@ -55,6 +55,15 @@ PATHを通す必要がありそう。
 - GOPATH
 - GOBIN ( `$GOPATH/bin/` )
 
+```bash
+# ~/.zshenv
+
+export GOPATH="$HOME/go"
+export PATH="$GOPATH:$PATH"
+export GOBIN="$GOPATH/bin"
+export PATH="$GOBIN:$PATH"
+```
+
 以下のコマンドであれば実行できた。
 
 `$GOBIN/godoc -http :8000`

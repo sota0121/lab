@@ -1,4 +1,5 @@
 {
+    "python.formatting.provider": "yapf",
     "go.formatTool": "gofmt",
     "gopls": {
         "experimentalWorkspaceModule": true,

@@ -9,6 +9,7 @@
 
 Learning notes and samples
 
+**学びになったものだけ記す。すべては記述しない。**
 
 
 

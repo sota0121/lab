@@ -1,0 +1,3 @@
+# something comment
+file 'hikakin_1280x720_1min.mp4'
+file 'shokotan_1920x1080_1min.mp4'

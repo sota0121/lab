@@ -80,7 +80,11 @@ def overlay_from_chunklist(chunklist_name: str, in_overlay_img_name: str, org_x:
         pathes = [re.findall('\'([^"]*)\'', l)[0] for l in fn_lines]
         streams = [ffmpeg.input('./data/' + p) for p in pathes]
 
-    in_file = ffmpeg.concat(*streams)
+    in_file = (
+        ffmpeg
+        .filter('scale', 1280, -1)
+        .concat(*streams)
+    )
     overlay_file = ffmpeg.input(in_overlay_img_name)
     ret = (
         ffmpeg

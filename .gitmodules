@@ -16,3 +16,6 @@
 [submodule "samples/go-cat"]
 	path = samples/go-cat
 	url = git@github.com:sota0121/go-cat.git
+[submodule "samples/ffmpeg-python-lab/ffmpeg-python"]
+	path = samples/ffmpeg-python-lab/ffmpeg-python
+	url = git@github.com:kkroening/ffmpeg-python.git

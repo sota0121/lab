@@ -1,0 +1,7 @@
+# something comment
+# file 'shokotan_1920x1080_1min.mp4_uni1280x720.mp4'
+# file 'hikakin_1280x720_1min.mp4'
+# file 'hikakin_1280x720_1min.mp4'
+# file 'hikakin_1280x720_1min.mp4'
+file 'shokotan_1920x1080_1min.mp4_uni1280x720.mp4'
+file 'shokotan_1920x1080_1min.mp4_uni1280x720.mp4'

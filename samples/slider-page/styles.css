@@ -13,6 +13,14 @@ h1 {
 
 .content {
     background-color: blanchedalmond;
-    width: 500px;
+    width: 800px;
     margin: 10px auto;
+}
+
+.content img {
+    margin: 15px auto;
+}
+
+.content img:hover {
+    opacity: .8;
 }

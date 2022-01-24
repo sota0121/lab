@@ -1,5 +1,10 @@
 @import url(sanitize.css);
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
 p {
     font-size: 24px;
     margin: 0;
@@ -7,14 +12,21 @@ p {
 
 h1 {
     font-size: 36px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
+}
+
+header {
+    margin-bottom: 30px;
 }
 
 .content {
     background-color: blanchedalmond;
     width: 800px;
     margin: 10px auto;
+}
+
+.date {
+    font-size: 300%;
 }
 
 .content img {

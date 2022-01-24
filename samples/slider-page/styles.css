@@ -1,9 +1,12 @@
+@import url(sanitize.css);
+
 p {
-    font-size: large;
+    font-size: 24px;
+    margin: 10px;
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 36px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 10px;
 }

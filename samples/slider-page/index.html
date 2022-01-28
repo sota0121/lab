@@ -13,9 +13,9 @@
     <header>Hello HTML/CSS/JavaScript</header>
     <div class="container">
         <script>
-            document.write('<p class="date">20xx/01/14</p>')
-            let ans = 10 + 3
-            document.write('<p>', '10 + 3 = ', ans, '</p>')
+            let today = new Date()
+            let todayStr = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate()
+            document.write('<p class="date">', todayStr, '</p>')
         </script>
     </div>
     <div class="content">

@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container">
-        <p id="timer">00:00:00</p>
+        <p id="timer">00:00:00:000</p>
 
         <div>
             <button id="start_stop" class="btn btn-lg btn-primary">START</button>
@@ -19,19 +19,27 @@
     </div>
 
     <script>
-        function addZero(intValue) {
-            if (intValue < 10) {
-                intValue = '0' + intValue
-            }
-            return intValue
+        function msTohhmmssmm(ms) {
+            let hour = Math.floor(ms / 60 / 60 / 1000)
+            let _ms = ms - (hour * 60 * 60 * 1000)
+            let min = Math.floor(_ms / 60 / 1000)
+            _ms = _ms - (min * 60 * 1000)
+            let sec = Math.floor(_ms / 1000)
+            _ms = _ms - (sec * 1000)
+            let hhmmssmm = hour.toString().padStart(2, 0) + ':' + min.toString().padStart(2, 0) + ':' + sec.toString().padStart(2, 0) + ':' + _ms.toString().padStart(3, 0)
+            return hhmmssmm
         }
 
-        document.getElementById('start_stop').addEventListener('click', function () {
+        var start;
+        var writeElaps = function () {
             let now = new Date()
-            let seconds = addZero(now.getSeconds())
-            let minutes = addZero(now.getMinutes())
-            let hour = addZero(now.getHours())
-            document.getElementById('timer').innerHTML = hour + ':' + minutes + ':' + seconds
+            let elapsed = now.getTime() - start.getTime()
+            document.getElementById('timer').innerHTML = msTohhmmssmm(elapsed)
+        };
+
+        document.getElementById('start_stop').addEventListener('click', function () {
+            start = new Date()
+            window.setInterval(writeElaps, 10);
         });
     </script>
 

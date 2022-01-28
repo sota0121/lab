@@ -25,11 +25,14 @@
             }
             return intValue
         }
-        let now = new Date()
-        let seconds = addZero(now.getSeconds())
-        let minutes = addZero(now.getMinutes())
-        let hour = addZero(now.getHours())
-        document.getElementById('timer').innerHTML = hour + ':' + minutes + ':' + seconds
+
+        document.getElementById('start_stop').addEventListener('click', function () {
+            let now = new Date()
+            let seconds = addZero(now.getSeconds())
+            let minutes = addZero(now.getMinutes())
+            let hour = addZero(now.getHours())
+            document.getElementById('timer').innerHTML = hour + ':' + minutes + ':' + seconds
+        });
     </script>
 
 </body>

@@ -31,6 +31,7 @@
         }
 
         var start;
+        var timer_id;
         var writeElaps = function () {
             let now = new Date()
             let elapsed = now.getTime() - start.getTime()
@@ -38,8 +39,20 @@
         };
 
         document.getElementById('start_stop').addEventListener('click', function () {
-            start = new Date()
-            window.setInterval(writeElaps, 10);
+            let status = this.innerHTML
+            if (status === 'START') {
+                this.innerHTML = 'STOP'
+                this.classList.remove('btn-primary')
+                this.classList.add('btn-danger')
+                start = new Date()
+                timer_id = window.setInterval(writeElaps, 10);
+            }
+            else {
+                this.innerHTML = 'START'
+                this.classList.remove('btn-danger')
+                this.classList.add('btn-primary')
+                window.clearInterval(timer_id)
+            }
         });
     </script>
 

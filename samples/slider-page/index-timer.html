@@ -19,12 +19,17 @@
     </div>
 
     <script>
-        let now = new Date()
-        let seconds = now.getSeconds()
-        if (seconds < 10) {
-            seconds = '0' + seconds
+        function addZero(intValue) {
+            if (intValue < 10) {
+                intValue = '0' + intValue
+            }
+            return intValue
         }
-        document.getElementById('timer').innerHTML = seconds
+        let now = new Date()
+        let seconds = addZero(now.getSeconds())
+        let minutes = addZero(now.getMinutes())
+        let hour = addZero(now.getHours())
+        document.getElementById('timer').innerHTML = hour + ':' + minutes + ':' + seconds
     </script>
 
 </body>

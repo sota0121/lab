@@ -18,34 +18,16 @@
     </div>
 
     <script>
-        let imgList = [
-            {
-                "path": "./assets/food1.jpg",
-                "name": "food1",
-                "comment": "omg"
-            },
-            {
-                "path": "./assets/forest.jpg",
-                "name": "forest",
-                "comment": "omg"
-            },
-            {
-                "path": "./assets/workout1.jpg",
-                "name": "workout",
-                "comment": "omg"
-            }
-        ]
-
         let createPhoto = function (element) {
             // (img_unit) > photo > img / cap
             let _path = element.path
             let _name = element.name
-            let _comment = element.comment
+            let _caption = element.caption
             let img = document.createElement('img')
             img.setAttribute('src', _path)
             let cap = document.createElement('div')
             cap.className = 'inner'
-            cap.innerHTML = '<p>' + _name + ' | ' + _comment + '</p>'
+            cap.innerHTML = '<p>' + _name + ' | ' + _caption + '</p>'
 
             let _photo = document.createElement('div')
             _photo.className = 'photo'
@@ -54,11 +36,45 @@
             return _photo;
         }
 
-        for (let index = 0; index < imgList.length; index++) {
-            const element = imgList[index];
-            let _photo = createPhoto(element);
-            document.getElementById('img_unit').appendChild(_photo)
+        let ajax = new XMLHttpRequest();
+        ajax.open('GET', 'https://h2o-space.com/htmlbook/images.php');
+        ajax.responseType = 'json';
+        ajax.send(null);
+
+        ajax.onreadystatechange = function() {
+            if (ajax.readyState === XMLHttpRequest.DONE && ajax.status === 200) {
+                for (let index = 0; index < this.response.length; index++) {
+                    const element = this.response[index];
+                    const photo = createPhoto(element);
+                    document.getElementById('img_unit').appendChild(photo);
+                }
+            }
         }
+
+        // ====== Not Ajax ======
+        // let imgList = [
+        //     {
+        //         "path": "./img/img01.jpg",
+        //         "name": "food1",
+        //         "caption": "omg"
+        //     },
+        //     {
+        //         "path": "./img/img02.jpg",
+        //         "name": "forest",
+        //         "caption": "omg"
+        //     },
+        //     {
+        //         "path": "./img/img03.jpg",
+        //         "name": "workout",
+        //         "caption": "omg"
+        //     }
+        // ]
+
+        // for (let index = 0; index < imgList.length; index++) {
+        //     const element = imgList[index];
+        //     let _photo = createPhoto(element);
+        //     document.getElementById('img_unit').appendChild(_photo)
+        // }
     </script>
 </body>
 </html>

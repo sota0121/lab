@@ -1,0 +1,68 @@
+.app_part {
+    width: 100% auto;
+    text-align: center;
+}
+
+.app_part p {
+    background-color: darkgray;
+    color: aliceblue;
+    margin: 20px auto;
+    padding: 5px;
+    font-size: 32px;
+}
+
+.app_part img {
+    max-width: 400px;
+    height: auto;
+}
+
+#page_top{
+width: 90px;
+height: 90px;
+position: fixed;
+right: 10px;
+bottom: 0;
+opacity: 0;
+transition: all 1s ease;
+}
+
+/* ボタンの表示を定義するセレクタ */
+#page_top.show {
+    opacity: 0.6;
+    transform: none;
+}
+#page_top a{
+position: relative;
+display: block;
+width: 90px;
+height: 90px;
+text-decoration: none;
+}
+#page_top a::before{
+font-family: 'Font Awesome 5 Free';
+font-weight: 900;
+content: '\f102';
+font-size: 30px;
+color: #A12568;
+position: absolute;
+width: 30px;
+height: 30px;
+top: -40px;
+bottom: 0;
+right: 0;
+left: 0;
+margin: auto;
+text-align: center;
+}
+#page_top a::after{
+content: 'TOP';
+font-size: 18px;
+position: absolute;
+top: 45px;
+bottom: 0;
+right: 0;
+left: 0;
+margin: auto;
+text-align: center;
+color: #A12568;
+}

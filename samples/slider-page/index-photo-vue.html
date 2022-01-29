@@ -20,6 +20,13 @@
     </header>
     <div class="container">
         <div id="img_unit">
+            <!-- v-for="Photo in Photos" is for loop of Vue.js -->
+            <div class="photo" v-for="Photo in Photos">
+                <img :src="Photo.path">
+                <div class="inner">
+                    <p>{{Photo.name}} | {{Photo.caption}}</p>
+                </div>
+            </div>
         </div>
 
         <div id="vue_footter">
@@ -28,15 +35,29 @@
     </div>
 
     <script>
-        $.getJSON('https://h2o-space.com/htmlbook/images.php', function(data) {
-            for (let index = 0; index < data.length; index++) {
-                const element = data[index];
-                $('<div class="photo"></div>')
-                    .append('<img src="' + element.path + '">')
-                    .append('<div class="inner"><p>' + element.name + ' | ' + element.caption + '</p></div>')
-                    .appendTo('#img_unit');
+        let app = new Vue({
+            el: '#img_unit',
+            data: {
+                Photos: []
+            },
+            created: function() {
+                let self = this;
+                $.getJSON('https://h2o-space.com/htmlbook/images.php', function(loadedData) {
+                    self.Photos = loadedData;
+                });
             }
         });
+
+        // === jquery version ===
+        // $.getJSON('https://h2o-space.com/htmlbook/images.php', function(data) {
+        //     for (let index = 0; index < data.length; index++) {
+        //         const element = data[index];
+        //         $('<div class="photo"></div>')
+        //             .append('<img src="' + element.path + '">')
+        //             .append('<div class="inner"><p>' + element.name + ' | ' + element.caption + '</p></div>')
+        //             .appendTo('#img_unit');
+        //     }
+        // });
 
         let vue_title = new Vue({
             el: '#vue_title',

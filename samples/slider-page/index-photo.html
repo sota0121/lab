@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300&display=swap');
+    </style>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header>My Photo</header>
+    <div class="container">
+        <div id="img_unit">
+        </div>
+    </div>
+
+    <script>
+        let imgList = [
+            {
+                "path": "./assets/food1.jpg",
+                "name": "food1",
+                "comment": "omg"
+            },
+            {
+                "path": "./assets/forest.jpg",
+                "name": "forest",
+                "comment": "omg"
+            },
+            {
+                "path": "./assets/workout1.jpg",
+                "name": "workout",
+                "comment": "omg"
+            }
+        ]
+
+        let createPhoto = function (element) {
+            // (img_unit) > photo > img / cap
+            let _path = element.path
+            let _name = element.name
+            let _comment = element.comment
+            let img = document.createElement('img')
+            img.setAttribute('src', _path)
+            let cap = document.createElement('div')
+            cap.className = 'inner'
+            cap.innerHTML = '<p>' + _name + ' | ' + _comment + '</p>'
+
+            let _photo = document.createElement('div')
+            _photo.className = 'photo'
+            _photo.appendChild(img)
+            _photo.appendChild(cap)
+            return _photo;
+        }
+
+        for (let index = 0; index < imgList.length; index++) {
+            const element = imgList[index];
+            let _photo = createPhoto(element);
+            document.getElementById('img_unit').appendChild(_photo)
+        }
+    </script>
+</body>
+</html>

@@ -4,3 +4,5 @@ __pycache__/
 
 samples/*/data/*.mp4
 samples/*/data/output*
+
+node_modules/

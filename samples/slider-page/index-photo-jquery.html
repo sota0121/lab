@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@300&display=swap');
+    </style>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+    <header>My Photo</header>
+    <div class="container">
+        <div id="img_unit">
+        </div>
+    </div>
+
+    <script>
+        $.getJSON('https://h2o-space.com/htmlbook/images.php', function(data) {
+            for (let index = 0; index < data.length; index++) {
+                const element = data[index];
+                $('<div class="photo"></div>')
+                    .append('<img src="' + element.path + '">')
+                    .append('<div class="inner"><p>' + element.name + ' | ' + element.caption + '</p></div>')
+                    .appendTo('#img_unit');
+            }
+        });
+    </script>
+</body>
+</html>

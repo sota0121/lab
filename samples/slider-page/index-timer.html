@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/styles.css">
+        <title>Timer</title>
+</head>
+<body>
+    <div class="container">
+        <p id="timer">00:00:00:000</p>
+
+        <div>
+            <button id="start_stop" class="btn btn-lg btn-primary">START</button>
+        </div>
+    </div>
+
+    <script>
+        function msTohhmmssmm(ms) {
+            let hour = Math.floor(ms / 60 / 60 / 1000)
+            let _ms = ms - (hour * 60 * 60 * 1000)
+            let min = Math.floor(_ms / 60 / 1000)
+            _ms = _ms - (min * 60 * 1000)
+            let sec = Math.floor(_ms / 1000)
+            _ms = _ms - (sec * 1000)
+            let hhmmssmm = hour.toString().padStart(2, 0) + ':' + min.toString().padStart(2, 0) + ':' + sec.toString().padStart(2, 0) + ':' + _ms.toString().padStart(3, 0)
+            return hhmmssmm
+        }
+
+        var start;
+        var timer_id;
+        var writeElaps = function () {
+            let now = new Date()
+            let elapsed = now.getTime() - start.getTime()
+            document.getElementById('timer').innerHTML = msTohhmmssmm(elapsed)
+        };
+
+        document.getElementById('start_stop').addEventListener('click', function () {
+            let status = this.innerHTML
+            if (status === 'START') {
+                this.innerHTML = 'STOP'
+                this.classList.remove('btn-primary')
+                this.classList.add('btn-danger')
+                start = new Date()
+                timer_id = window.setInterval(writeElaps, 10);
+            }
+            else {
+                this.innerHTML = 'START'
+                this.classList.remove('btn-danger')
+                this.classList.add('btn-primary')
+                window.clearInterval(timer_id)
+            }
+        });
+    </script>
+
+</body>
+</html>

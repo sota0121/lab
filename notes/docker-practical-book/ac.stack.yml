@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  web:
+    image: sota0121/access-count:v1
+    ports:
+      - "8081:8081"
+    deploy:
+      placement:
+        constraints:
+          - "node.role != manager"
+    networks:
+      - ac-overlay-net
+
+  redis:
+    image: redis:alpine
+    deploy:
+      placement:
+        constraints:
+          - "node.role != manager"
+    networks:
+      - ac-overlay-net
+
+  service-viz:
+    # Docker Swarm Services Visualizer
+    image: "dockersamples/visualizer"
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+    ports:
+      - "38080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+networks:
+  ac-overlay-net:
+    external: true

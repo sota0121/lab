@@ -8,7 +8,7 @@
   - [x] image push (to my hub.docker repo)
   - [x] image pull and deploy stack to swarm
   - [x] creating overlay network on multi host cluster
-  - [ ] curl web app from client container
+  - [x] curl web app from client container
 
 - web app へのアクセスでは、 `ac01_web` service のVIPがなぜか2つ存在した
 - 一応、両方ともに curl してみたが、一方は `no routing host` 他方は `time out`

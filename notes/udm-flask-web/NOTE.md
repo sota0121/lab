@@ -1,12 +1,26 @@
 # Note
 
+- [Note](#note)
+  - [repo](#repo)
+  - [1. Flask Basics Overview](#1-flask-basics-overview)
+  - [2. Jinja2 / Template](#2-jinja2--template)
+  - [3. Error Handling](#3-error-handling)
+  - [4. Form](#4-form)
+  - [5. wtforms](#5-wtforms)
+  - [6. Form(wtforms) / Macro on Template / session](#6-formwtforms--macro-on-template--session)
+  - [7. wtforms - Field](#7-wtforms---field)
+  - [8. wtforms - validation](#8-wtforms---validation)
+  - [9. Model Basics](#9-model-basics)
+  - [10. SQLAlchemy Basics](#10-sqlalchemy-basics)
+  - [11. ex. Form / Model Integration](#11-ex-form--model-integration)
+
 ## repo
 
 - Text: [github - NM-Udemy/FlaskCourse](https://github.com/NM-Udemy/FlaskCourse)
 - my repo: [github - sota0121/lab](https://github.com/sota0121/lab)
 
 
-## memo
+## 1. Flask Basics Overview
 
 - MVT構成である
 
@@ -31,7 +45,10 @@ def info():
   - ![img3](images/img3.png)
 - デフォルトは `app.py` 階層の `templates/*.html` を読む
   - 指定する場合は、 `Flask(__name__, template_folder="xxx")` といった形でキーワード引数で指定する
-- **=== Jinja2 ===**
+
+
+## 2. Jinja2 / Template
+
 - 変数を使う
   - サーバー側では `return render_template('index.html', user={'name': 'taro', 'age': 19})` といった形
   - HTML側は `{{ user.name }}` や `{{ user['name'] }}` といった形で使う。
@@ -73,7 +90,10 @@ def info():
   - テンプレートファイル内で、ビルトインと同様に呼び出せる。
 - コメントアウト
   - `{#}` を先頭に置く、または `{# / #}` で囲む。
-- **=== end Jinja2 ===**
+
+
+## 3. Error Handling
+
 - Flaskの画面遷移とエラーハンドラー
   - `url_for`: 指定したendpoint(関数名)でURLを作成して、返す
     - e.g.: `<a href="{{url_for('func') }}>New Page</a>`
@@ -101,7 +121,9 @@ def user(user_name: str):
 
 ```
 
-- **=== start Flask Form ===**
+
+## 4. Form
+
 - Flask の Form
   - ログイン画面やデータ入力で使われるもの
   - ファイルアップロードなど
@@ -145,6 +167,10 @@ file.save(os.path.join('./static/image', save_filename))
 
 - ファイルアップロードするときの form
   - `<form action="{{url_for('upload')}}" method="POST" enctype="multipart/form-data">XXXX</form>`
+
+
+## 5. wtforms
+
 - wtformとは？
   - ![img8](images/img8.png)
 - wtform では、Formのクラスをサーバー側に定義して、Formで送信された情報の精査＋オブジェクト化を行うようだ。
@@ -206,8 +232,10 @@ def index():
 </form>
 {% end block %}
 ```
-- **=== end Flask Form ===**
-- **=== Flask Form/template上の関数/session ===**
+
+
+## 6. Form(wtforms) / Macro on Template / session
+
 - ![img11](images/img11.png)
 - template 内で関数を定義し、使いまわすことができる。（当然できるとは思っていたが、やり方を知りたかった）
   - 関数定義: `{% macro func(field) %} / {% endmacro %}` (仮に `_form.html` で定義しているとする)
@@ -298,10 +326,15 @@ def show_user():
 ```
 
 - つまり、 `flask.session` は、ブラウザごとのセッションIDとセッションデータの紐付けみたいなところを担ってくれるライブラリだと思われる。
-- **=== end Flask Form/template上の関数/session ===**
-- **=== Flask field ===**
+
+
+## 7. wtforms - Field
+
 - ![img13](images/img13.png)
-- **=== end Flask field ===**
+
+
+## 8. wtforms - validation
+
 - **=== Flask validation ===**
 - ![img14](images/img14.png)
 - `wtforms.StringField` などのコンストラクタのキーワード引数 `validators` にコールバックの配列を渡すことで、一つのフィールドにバリデーションを複数登録することができる。
@@ -365,8 +398,10 @@ class UserForm(Form):
     <p>{{ message }}</p>
 {% endfor %}
 ```
-- **=== end Flask validation ===**
-- **=== Model ===**
+
+
+## 9. Model Basics
+
 - 基本
   - Flask-SQLAlchemy / Flask-Migrate は基本セット
 - Configの変数
@@ -406,8 +441,9 @@ class Person(db.Model):
     # ...
 ```
 
-- **=== end Model ===**
-- **=== SQLAlchemy Basics ===**
+
+## 10. SQLAlchemy Basics
+
 - SQLAlchemy基本操作<br>![img16](images/img16.png)
 - Foreign Key Ref Constraint（外部参照）<br>![img17](images/img17.png)
   - **`db.relationship('Address', backref='user', lazy=True)`**
@@ -430,8 +466,10 @@ class Person(db.Model):
   - `e.projects` といった形でアサイン先プロジェクトの情報がとれるケースを考えよう。
   - このとき、通常 `select / joined / subquery` の場合は、 `e.projects` はList型になっている。（厳密には  `sqlalchemy.orm.collections.InstrumentedList` ）
   - 一方で、 `dynamic` の場合は、 `AppenderBaseQuery` 型となり、クエリ可能オブジェクトとして帰ってくるのである。つまり、 `e.projects.order_by(...).xxx` といった形でクエリを続けられる。
-- **=== end SQLAlchemy Basics ===**
-- **=== Form / Model ===**
+
+
+## 11. ex. Form / Model Integration
+
 - トランザクションの利用方法
   - トランザクション中にエラーが発生した場合は、ロールバックできる。
 
@@ -445,6 +483,5 @@ db.session.commit()
 
 - 演習
   - コードはこちら（GitHub: https://github.com/NM-Udemy/FlaskCourse/tree/main/09_model_form）
-- **=== end Form / Model ===**
 
 

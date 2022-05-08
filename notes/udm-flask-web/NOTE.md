@@ -110,8 +110,260 @@ def user(user_name: str):
 
 ![img5](images/img5.png)
 
-- ...
+- HTMLの基礎 - form
+  - こんな感じ（[GitHubリンク](https://github.com/NM-Udemy/FlaskCourse/blob/main/04_form/templates/signup.html)）<br>![img6](images/img6.png)
+  - form tag とは？
+    - form で囲んだ部分に `input` タグを複数置くことができ、この `input` の情報をサーバーに送付するのが、 `form` タグの役割と思われる
+    - 送付するときは、GETならURLで、POSTならBodyで送る。
+  - `label` タグは、指定した `input/select/...` など入力系タグに表示用の名前を設定するものと思われる。 `<label for="NAME">` `<input type="text" name="NAME">` といった形で、 `name` 属性にしていした名前を指定することで、任意の入力タグにラベルをはる。ラベルは入力要素の左側にくる？（これはよくわからん）
+  - `<input type="submit" value="disp-name">` が送信ボタンである。
+- Formによる画像のアップロード
+  - ![img7](images/img7.png)
+- `pykakashi` により日本語をアスキー文字に変換できる（あああ→aaa）。これを使えば、 `werkzeug.scure_filename()` 実行前に日本語を英語に変換すれば、なんでも対処できる。 **日本語ファイル名によるバグが起こるので、これはほぼ必須の対応** と思われる。
 
+```python
+import pykakasi
+
+class Kakashi
+
+    kakashi = pykakasi.kakasi()
+    kakashi.setMode('H', 'a') # hiragana -> ascii
+    kakashi.setMode('K', 'a') # katakana -> ascii
+    kakashi.setMode('J', 'a') # kanji -> ascii
+    conv = kakashi.getConverter()
+
+    @classmethod
+    def ja_to_ascii(cls, japanese: str) -> str:
+        return cls.conv.do(japanese)
+
+# --- e.g. ---
+filename = file.filename
+filename_ascii = Kakashi.ja_to_ascii(filename)
+save_filename = secure_filename(filename_ascii)
+file.save(os.path.join('./static/image', save_filename))
+```
+
+- ファイルアップロードするときの form
+  - `<form action="{{url_for('upload')}}" method="POST" enctype="multipart/form-data">XXXX</form>`
+- wtformとは？
+  - ![img8](images/img8.png)
+- wtform では、Formのクラスをサーバー側に定義して、Formで送信された情報の精査＋オブジェクト化を行うようだ。
+- CSRF攻撃とは？
+  - Cross Site Request Forgery
+  - ref: [クロスサイトリクエストフォージェリ - Trend Micro](https://www.trendmicro.com/ja_jp/security-intelligence/research-reports/threat-solution/csrf.html)
+  - ![img9](images/img9.png)
+  - ![img10](images/img10.png)
+  - 要は、外部サイトからのForm入力を受け付けてしまうことによる問題
+- wtform -> `pip install wtforms`
+- app.config['SECRET_KEY'] には乱数を設定する。（ `os.urandom(16)` が公式推奨方法 ）
+- Formクラスを作る
+
+```python
+from flask import (Flask, render_template, request)
+from wtforms import (StringField, SubmitField, IntegerField)
+from wtforms.form import Form
+
+# ...
+
+class UserForm(Form):
+    name = StringField('名前')
+    age = IntegerField('年齢')
+    submit = SubmitField('Submit')
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    name = age = ''
+    form = UserForm(request.form)
+    if request.method == 'POST':
+        if form.validate(): # check value type ... etc
+            name = form.name.data
+            age = form.age.data
+            form = UserForm() # create empty form
+        else:
+            print('invalid form')
+    return render_template('index.html', form=form, name=name, age=age)
+
+```
+
+```jinja2
+{% extends "base.html" %}
+{% block content %}
+<p>
+    {% if name and age %}
+    名前: {{ name }} <br>
+    年齢: {{ age }}
+    {% else %}
+    名前と年齢を入力してください。
+    {% endif %}
+</p>
+
+<form method="POST">
+    {{ form.csrf_token }}
+    <!-- label/input タグに相当する情報を定義↓↓ -->
+    {{ form.name.label }}{{ form.name() }}
+    {{ form.age.label }}{{ form.age() }}
+    {{ form.submit() }}
+</form>
+{% end block %}
+```
 - **=== end Flask Form ===**
+- **=== Flask Form/template上の関数/session ===**
+- ![img11](images/img11.png)
+- template 内で関数を定義し、使いまわすことができる。（当然できるとは思っていたが、やり方を知りたかった）
+  - 関数定義: `{% macro func(field) %} / {% endmacro %}` (仮に `_form.html` で定義しているとする)
+  - 関数読み込み: `{% from "_form.html" import func %}`
+- sessionは `flask.session` というライブラリを使う。
+- `render_field(field)` マクロでFormの各フィールドのバリデーションや表示を制御する関数を定義。これを使いまわす。
+- [html - dd/dt/dl 要素](https://ferret-plus.com/5063)
+  - `<dt>`: definition term
+  - `<dd>`: definition description
+  - `<dl>`: definition list
 
+```jinja2
+<!-- _formhelpers.html -->
+{% macro render_field(field) %}
+<dt>{{ field.label }}</dt>
+<dd>{{ field(**kwargs)|safe }}</dd>
+
+{% if field.errors %}
+<ul class="error">
+    {% for error in errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endmacro %}
+```
+
+```jinja2
+<!-- register.html -->
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+{% block content %}
+
+<form method="POST">
+    {{ form.csrf_token}}
+    {{ render_field(form.name) }}
+    {{ render_field(form.age) }}
+    {{ render_field(form.password) }}
+    {{ form.submit() }}
+</form>
+
+{% endblock %}
+```
+
+- sessionを設定
+  - `form = UserForm(request.form)` and `form.validate()`
+  - `session['name'] = form.name.data`
+
+```python
+from flask import session # ...
+from wtforms.form import Form # ...
+
+# app = Flask(__name__)
+# ...
+# class UserForm(Form)
+# ...
+
+@app.route('/')
+def index():
+    form = UserForm(request.form)
+    if request.method == 'POST' and form.validate():
+        session['name'] = form.name.data
+        session['age'] = form.age.data
+        return redirecto(url_for('show_user'))
+
+    return render_template('register.html', form=form)
+
+@app.route('/show_user')
+def show_user():
+    return render_template('show_user.html')
+```
+
+- `session` に値を設定した場合、 `render_template('xx.html', XX=xxx)` のように引数に渡さずとも、値を受け渡すことができる。
+- そもそもセッションって何だっけ？
+  - [セッションの仕組みを理解しよう - 神田IT School](https://kanda-it-school-kensyu.com/python-django-contents/pdc_ch07/pdc_0702/)
+  - ![img12](images/img12.png)
+  - セッションは、サーバー上のキャッシュである。ブラウザ単位で複数ページ横断で利用可能な一時情報だ。
+  - セッションをブラウザ単位で管理するために、ブラウザ（クライアント）側にはセッションIDを保持し、リクエスト時に送信する。サーバーはクライアントのリクエストに含まれるセッションIDをキーとして利用し、そのブラウザのセッションデータを取り出す。
+  - ブラウザがセッションIDを保持する方法は、①クッキーを使う方法②キャッシュを使う方法がある。
+
+
+```jinja2
+<h1>Thank you for your register</h1>
+<ul>
+    <li>名前: {{ session['name'] }}</li>
+    <li>年齢: {{ session['age'] }}</li>
+</ul>
+```
+
+- つまり、 `flask.session` は、ブラウザごとのセッションIDとセッションデータの紐付けみたいなところを担ってくれるライブラリだと思われる。
+- **=== end Flask Form/template上の関数/session ===**
+- **=== Flask field ===**
+- ![img13](images/img13.png)
+- **=== end Flask field ===**
+- **=== Flask validation ===**
+- ![img14](images/img14.png)
+- `wtforms.StringField` などのコンストラクタのキーワード引数 `validators` にコールバックの配列を渡すことで、一つのフィールドにバリデーションを複数登録することができる。
+
+```python
+# ...
+from wtforms.validators import (
+    DataRequired, EqualTo, Length, NumberRange, ValidationError
+)
+from wtforms.widgets import TextArea
+from wtforms.form import Form
+# ...
+
+class UserForm(Form)
+    name = StringField(
+        '名前: ', widget=TextArea(), default='Taro',
+        validators=[
+            DataRequired('入力必須です')
+        ])
+    age = IntegerField(
+        '年齢: ',
+        validators=[
+            NumberRange(0, 100, '0歳〜100歳のみ可能です')
+        ])
+```
+
+- カスタムのバリデーション関数を作る場合は、 `valid_func(form, field)` という形にする。
+  - Formクラス内に定義する場合は、 `def valid_func(self, field)`
+  - 外部関数に定義する場合は、 `def valid_func(form, field)`
+  - もちろん、 `form: Form, field: Field` である。
+  - ===
+  - こうした上で、 `StringField(validators=[valid_func])` として、コールバックとして定義すればOK
+- 複数フィールドのバリデーションをどうやるか？
+  - `wtforms.form.Form` クラスの `validate()` 関数をオーバーライドする
+
+```python
+# ...
+class UserForm(Form):
+    # ...
+    def validate(self):
+        # 既定クラスのバリデーションを実行 ---------
+        if not super(UserForm, self).validate()
+            return False
+        # ここからカスタム ----------------------
+        today = date.today()
+        birthday = self.birthday.data
+        birthday_of_this_age = birthday.replace(
+            year=birthday.year + self.age.data
+        )
+        if 0 <= (today - birthday_of_this_age).days <= 365:
+            return True
+        flash("invalid age")
+        return False
+```
+
+```jinja2
+<!-- flash を表示する -->
+
+
+{% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+{% endfor %}
+```
+- **=== end Flask validation ===**
 

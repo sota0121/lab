@@ -366,4 +366,85 @@ class UserForm(Form):
 {% endfor %}
 ```
 - **=== end Flask validation ===**
+- **=== Model ===**
+- 基本
+  - Flask-SQLAlchemy / Flask-Migrate は基本セット
+- Configの変数
+  - 一覧はこちら [Flask-SQLAlchemy - Configuration](https://flask-sqlalchemy.palletsprojects.com/en/2.x/config/)
+- ※sqlite を使う場合は、 `vscode` の拡張でViewingできる
+- モデル定義のカラムのオプション
+  - ![img15](images/img15.png)
+- `sqlalchemy.CheckConstraint` で値のチェック制約を入れるには、以下のように記述する
+
+```python
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import CheckConstraint
+
+
+# app = Flask(__name__)
+# app.config['xxx'] = ...
+# db = SQLAlchemy(app)
+# ...
+
+class Person(db.Model):
+
+    __tablename__ = 'persons'
+    __table_args__ = (
+        CheckConstraint('updated_at >= created_at') # constraint
+    )
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), index=True, server_default='nanashi')
+    age = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, server_default=db.func.now())
+
+    # def __init__(self, ...)e
+    # ...
+    # def __str__(self):
+    # ...
+```
+
+- **=== end Model ===**
+- **=== SQLAlchemy Basics ===**
+- SQLAlchemy基本操作<br>![img16](images/img16.png)
+- Foreign Key Ref Constraint（外部参照）<br>![img17](images/img17.png)
+  - **`db.relationship('Address', backref='user', lazy=True)`**
+    - 参照されている方 = 親 = FK持たない方 側に定義する
+    - 親側から子を取得できるようになる。
+    - **`backref`**
+      - 子側からアクセスする場合のオブジェクト名
+    - **`lazy`**
+      - テーブル紐付けの処理方式
+      - `select(default) / joined / subquery / dynamic`（？？？）
+    - **`uselist`**
+      - Falseにすると、1対1紐付けにする（？？？）
+    - **`join_depth`**
+      - 他のテーブルとの紐付ける深さを決める
+      - どうやらひも付き関係を何ホップ先まで実行するのかを決めるっぽい。（？？？）
+  - **`db.ForeignKey('users.id')`**
+    - 外部キーを作成（これが外部キー制約になる？）
+- `lazy='dynamic'` の効用
+  - 社員 Employees / プロジェクト Projects がそれぞれ外部キーで紐付いていたとして
+  - `e.projects` といった形でアサイン先プロジェクトの情報がとれるケースを考えよう。
+  - このとき、通常 `select / joined / subquery` の場合は、 `e.projects` はList型になっている。（厳密には  `sqlalchemy.orm.collections.InstrumentedList` ）
+  - 一方で、 `dynamic` の場合は、 `AppenderBaseQuery` 型となり、クエリ可能オブジェクトとして帰ってくるのである。つまり、 `e.projects.order_by(...).xxx` といった形でクエリを続けられる。
+- **=== end SQLAlchemy Basics ===**
+- **=== Form / Model ===**
+- トランザクションの利用方法
+  - トランザクション中にエラーが発生した場合は、ロールバックできる。
+
+```python
+with db.session.begin(subtransactions=True)
+    # ...
+    # processes
+    # ...
+db.session.commit()
+```
+
+- 演習
+  - コードはこちら（GitHub: https://github.com/NM-Udemy/FlaskCourse/tree/main/09_model_form）
+- **=== end Form / Model ===**
+
 

@@ -13,6 +13,9 @@
   - [9. Model Basics](#9-model-basics)
   - [10. SQLAlchemy Basics](#10-sqlalchemy-basics)
   - [11. ex. Form / Model Integration](#11-ex-form--model-integration)
+  - [12. For Practical Application - BluePrint](#12-for-practical-application---blueprint)
+  - [13. For Practical Application - login](#13-for-practical-application---login)
+  - [14. For Practical Application - AJAX](#14-for-practical-application---ajax)
 
 ## repo
 
@@ -483,5 +486,93 @@ db.session.commit()
 
 - 演習
   - コードはこちら（GitHub: https://github.com/NM-Udemy/FlaskCourse/tree/main/09_model_form）
+
+
+## 12. For Practical Application - BluePrint
+
+![img18](images/img18.png)
+
+- BluePrintは何のために使うのか？
+  - **Viewやルーティングをアプリ単位で分けたい場合** に利用する
+
+
+## 13. For Practical Application - login
+
+![img19](images/img19.png)
+
+- code on github: [FlaskCourse/10_blueprint_login](https://github.com/NM-Udemy/FlaskCourse/tree/main/10_blueprint_login)
+- `flask_login.LoginManager` が Flask App と Flask-Login をつなぐ
+- ※気になったこと
+  - `from flask_bcrypt import generate_password_hash, check_password_hash` としていた
+  - 自分でやったときは、 `from werkzeug.utils import ...` としたが
+- ログインが必要なView関数には `@login_required` でデコレーとする
+  - `from flask_login import login_required`
+  - ログインできている場合、この処理が実行される
+  - ログインしていない場合、ログイン画面に飛ばされる
+  - ログイン画面はどう登録する？
+    - `LoginManager()` インスタンスの `.login_view` メンバ変数に設定した値から判断する
+    - 例えば以下のようにすれば、 `app` というBluePrintの `login` という view 関数に飛ぶ
+
+```python
+# ...
+
+login_manager = LoginManager()
+login_manager.login_view = 'app.login'
+
+# ...
+```
+
+- ログインが必要なview関数で、ログイン済みでなかったため、ログイン画面に飛ばされる。そして、ログイン画面でログインしたら、「本来行きたかったページに飛ぶ」ようにしたい。これを実現するには、 `login()` 関数内で、 `request.args.get('next')` とすれば、「本来飛びたかったページのURL」を取得できる
+
+```python
+from flask_login import (
+    login_user,
+    login_required,
+    logout_user
+)
+
+# ...
+@bp.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User.select_by_email(form.email.data)
+        if user and user.validate_password(form.password.data):
+            login_user(user, remember=True) # <-- remember if though browser closed
+            next_url = request.args.get('next') # <-- in this way
+            if not next_url:
+                next_url = url_for('app.welcome')
+            return redirect(next_url)
+    return render_template('login.html', form=form)
+# ...
+```
+
+- template 側でログイン済みか否かを判定する方法
+  - 1. server側で「セッションに保存されたユーザー情報をロードする関数を定義する」。これは `LoginManager class` のインスタンスの `user_loader` というデコレータを付与した関数である。
+  - 2. template側で `current_user` とやらのオブジェクトにアクセスし `current_user.is_authenticated` というフラグを確認する
+  - 3. この `current_user` というオブジェクトには、どの template ファイルからも呼び出せるらしい
+  - しかし、ここがどうやって連動しているのかが、よくわからない。
+    - **★疑問１**： `user_loader` デコレータが付与された関数が、どこからも呼ばれてない（あくまでも my code 上）
+    - **★疑問２**： `current_user` なるオブジェクトが `render_template()` などの引数で渡されているわけでもないのに、なぜか呼べている。
+
+```python
+# この current_user はどうやら flask_login.UserMixin を継承した
+# User モデルのオブジェクトらしいことがわかった
+```
+
+![img20](images/img20.png)
+
+- ある程度大きくなってきたら、以下のようにしたほうが良さそう
+  - entrypoint あたり（`app.py` / `__init__.py`）で `create_app()` 関数を定義して、セットアップをまとめる。
+  - `views.py` で BluePrint インスタンスを定義し、 `create_app()` 内で `register_bluprint()` する
+  - `views.py` をアプリ（≒BluePrint）につき一つ、 `create_app()` をサービスにつき一つ、 `app` オブジェクトをサービスにつき一つ、用意する。 `create_app()` と `app` オブジェクト生成は一緒でもいいが、それぞれ分けた方がいいかも。
+
+
+## 14. For Practical Application - AJAX
+
+![img21](images/img21.png)
+
+- [About Flask and jquery (ajax) | Flask Doc](https://flask.palletsprojects.com/en/2.1.x/patterns/jquery/)
+
 
 

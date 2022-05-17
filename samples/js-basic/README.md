@@ -10,3 +10,8 @@
 ```bash
 node main.js
 ```
+
+## JavaScript Debug TIPS
+
+- `console.log('xxx')` の内容は、ブラウザに表示されるのではなく、開発者ツールのConsoleに表示される。
+

@@ -16,6 +16,7 @@
   - [12. For Practical Application - BluePrint](#12-for-practical-application---blueprint)
   - [13. For Practical Application - login](#13-for-practical-application---login)
   - [14. For Practical Application - AJAX](#14-for-practical-application---ajax)
+  - [15. SNS - friendship function](#15-sns---friendship-function)
 
 ## repo
 
@@ -573,6 +574,12 @@ def login():
 ![img21](images/img21.png)
 
 - [About Flask and jquery (ajax) | Flask Doc](https://flask.palletsprojects.com/en/2.1.x/patterns/jquery/)
+
+
+## 15. SNS - friendship function
+
+![img22](images/img22.png)
+
 
 
 

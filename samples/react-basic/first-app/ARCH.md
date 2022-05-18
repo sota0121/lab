@@ -8,3 +8,5 @@
   - DnD
 - View tasks in Kanban style (multi list)
 
+
+![img](imgs/app-img.png)

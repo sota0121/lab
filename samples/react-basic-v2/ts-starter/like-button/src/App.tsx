@@ -15,12 +15,12 @@ function App() {
 const LikeButton = () => {
   const [likeCount, setLikeCount] = useState(0);
 
-  const onClick = () => {
+  const handleClick = () => {
     setLikeCount(likeCount + 1);
   };
 
   return (
-    <span className='LikeButton' onClick={onClick}>
+    <span className='LikeButton' onClick={handleClick}>
       ♥ {likeCount}
     </span>
   )

@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.LikeButton {
+  background-color: indianred;
+  color: white;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}

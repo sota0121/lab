@@ -10,7 +10,7 @@
 
 1. relearn-ts-js-basic
    1. pt1 / 2-1 ~ 2-9, 4-2 ~ 4-7
-   2. [relearn-ts-js-basic]()
+   2. [relearn-ts-js-basic/NOTE.md](relearn-ts-js-basic/NOTE.md)
 2. functional-programming
    1. pt1 / 3-1 ~ 3-3
 3. tsconfig

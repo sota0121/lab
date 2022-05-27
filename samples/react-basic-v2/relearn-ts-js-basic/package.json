@@ -1,0 +1,12 @@
+{
+  "name": "relearn-ts-js-basic",
+  "version": "1.0.0",
+  "description": "relearn-ts-js basic",
+  "main": "index.js",
+  "author": "Sota Masuda",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "rfdc": "^1.3.0"
+  }
+}

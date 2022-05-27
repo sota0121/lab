@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -13,8 +13,17 @@ function App() {
 }
 
 const LikeButton = () => {
-  const likeCount = 888;
-  return <span className='LikeButton'>♥ {likeCount}</span>
+  const [likeCount, setLikeCount] = useState(0);
+
+  const onClick = () => {
+    setLikeCount(likeCount + 1);
+  };
+
+  return (
+    <span className='LikeButton' onClick={onClick}>
+      ♥ {likeCount}
+    </span>
+  )
 };
 
 export default App;

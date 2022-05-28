@@ -47,3 +47,18 @@ use this
 - ===
 - `typesync`
 - `yarn`
+
+### Customize .eslintrc.js
+
+```js
+    extends: [
+        'plugin:react/recommended',
+        'airbnb',
++       'airbnb/hooks',
++       'plugin:import/errors',
++       'plugin:import/warnings',
++       'plugin:import/typescript',
++       'plugin:@typescript-eslint/recommended',
++       'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        ],
+```

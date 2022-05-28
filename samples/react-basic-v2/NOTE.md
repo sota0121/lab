@@ -44,3 +44,6 @@ use this
 - `config file -> JavaScript`
 - `install now ? -> Yes`
 - `(select) yarn`
+- ===
+- `typesync`
+- `yarn`

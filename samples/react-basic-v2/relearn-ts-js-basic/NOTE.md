@@ -28,3 +28,15 @@ index.ts:3:1 - error TS2584: Cannot find name 'console'. Do you need to change y
 
 + "noImplicitAny": true,
 ```
+
+## Enable strictNullChecks - Null Safety
+
+- null, undefined はデフォルトではどんな型の値にも入れられる。
+- 歴史的経緯により、デフォルト値がこっちになっているが
+- 新規プロジェクトでは、Trueにしよう。
+
+`tsconfig.json`
+
+```json
++ "strictNullChecks": true,
+```

@@ -488,3 +488,101 @@ console.log('\n> Extract<T, U>\n> Exclude<T, U>\n> NonNullable<T>\n> ReturnType<
 console.log('...')
 
 
+console.log('\n===================================')
+console.log(' Overload Functions')
+console.log('===================================')
+
+class Person {
+    name: string = 'John';
+    gender: string = 'male';
+}
+
+class Student extends Person {
+    className: string = '1A'
+    classNumber: number = 20
+}
+
+// function info(): void;
+// function info(person: Person): void;
+// function info(person: Student): void
+// function info(person?: Person | Student): void {
+//     if (person instanceof Person) {
+//         console.log('Person Information is ...')
+//         console.log(`Name: ${person?.name}`)
+//         console.log(`Gender: ${person?.gender}`)
+//     } else if (person instanceof Student ) {
+//         console.log('Student Information is ...')
+//         console.log(`Name: ${person?.name}`)
+//         console.log(`Gender: ${person?.gender}`)
+//         console.log(`ClassName: ${person?.className}`)
+//         console.log(`classNumber: ${person?.classNumber}`)
+//     } else {
+//         console.log('person is fake...')
+//     }
+// }
+
+console.log('Does not work...')
+
+
+console.log('\n===================================')
+console.log(' Type Guards')
+console.log('===================================')
+
+console.log('\n> Premitive Types --> Use typeof')
+const foo: unknown = '1,2,3,4'
+console.log('const foo: unknown = "1,2,3,4"')
+if (typeof foo === 'string') {
+    console.log('foo is string')
+    console.log(foo.split(','))
+} else {
+    console.log('foo is not string')
+}
+
+console.log('\n> Classes --> Use instanceof')
+class Base { common: string = 'common' }
+class Foo extends Base { foo = () => { console.log('foo') } }
+class Bar extends Base { bar = () => { console.log('bar') } }
+console.log('class Base { common: string = "common" }')
+console.log('class Foo extends Base { foo = () => { console.log("foo") } }')
+console.log('class Bar extends Base { bar = () => { console.log("bar") } }')
+
+const doDivide = (arg: Foo | Bar): void => {
+    if (arg instanceof Foo) {
+        arg.foo()
+    } else if (arg instanceof Bar) {
+        arg.bar()
+    } else {
+        console.log('arg is not Foo or Bar')
+    }
+};
+doDivide(new Foo())
+doDivide(new Bar())
+
+console.log('\n> User-Defined Type Guard for type')
+
+type UserX = { name: string, age: number }
+console.log('type UserX = { name: string, age: number }')
+const isUserX = (arg: any): arg is UserX => {
+    const u = arg as User;
+
+    return (
+        typeof u?.name === 'string' &&
+        typeof u?.age === 'number'
+    );
+};
+console.log('arg is UserX --> This is called Type Predicate (型述語)')
+console.log('この関数の戻り値がTrueだった場合に、引数 arg が型UserXであるとコンパイラに伝わる')
+
+const u1: unknown = JSON.parse('{}')
+const u2: unknown = JSON.parse('{"name": "John", "greet": "hello"}')
+const u3: unknown = JSON.parse('{"name": "John", "age": 20}')
+
+const ulist = [u1, u2, u3];
+ulist.forEach((u) => {
+    if (isUserX(u)) {
+        console.log('u is UserX')
+    } else {
+        console.log('u is not UserX')
+    }
+    console.log(u);
+});

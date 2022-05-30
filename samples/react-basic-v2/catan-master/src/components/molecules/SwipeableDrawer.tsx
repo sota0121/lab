@@ -56,20 +56,15 @@ const SwipeableTemporaryDrawer: React.FC<SwipeableDrawerProps> = (props: Swipeab
     >
       <List>
         {["Start", "Dashboard", "Users"].map((text, index) => (
-          <Router>
-            <ListItem key={text} disablePadding>
-              <ListItemButton
-                component={NavLink}
-                to={pageMap[index].path}
-              >
-                <ListItemIcon>
-                  <PeopleIcon />
-                  {/* {index % 2 === 0 ? <PeopleIcon /> : <PeopleIcon />} */}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          </Router>
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <PeopleIcon />
+                {/* {index % 2 === 0 ? <PeopleIcon /> : <PeopleIcon />} */}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
         ))}
       </List>
     </Box>

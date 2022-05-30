@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
 } from 'react-router-dom';
@@ -18,16 +17,11 @@ const App: FC = () => {
   return (
     <>
       <CmAppBar />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />}>
-          </Route>
-          <Route path="/dashboard" element={<Dashboard />}>
-          </Route>
-          <Route path="/users" element={<User />}>
-          </Route>
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/users" element={<User />}></Route>
+      </Routes>
     </>
   );
 };

@@ -17,7 +17,7 @@ import { Menu as MenuIcon } from '@mui/icons-material';
 const CmAppBar: FC = () => {
   const [ anchorEl, setAnchorEl ] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>): any => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {

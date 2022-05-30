@@ -20,8 +20,8 @@ import type { RadioItem, RowRadioBtnGroupProps } from '../molecules/RowRadioBtn'
 const Home: FC = () => {
 
   const radioItems: RadioItem[] = [
-    { label: '3 players', value: '3' },
-    { label: '4 players', value: '4' },
+    { label: '3 players', value: 3 },
+    { label: '4 players', value: 4 },
   ]
   const [selIndex, setSelIndex] = React.useState(3); // num of players
   const props: RowRadioBtnGroupProps = {

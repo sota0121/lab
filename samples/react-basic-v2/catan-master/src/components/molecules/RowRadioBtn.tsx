@@ -12,7 +12,7 @@ import {
 
 type RadioItem = {
     label: string;
-    value: string;
+    value: number;
 };
 
 type RowRadioBtnGroupProps = {
@@ -24,16 +24,27 @@ type RowRadioBtnGroupProps = {
 export type { RadioItem, RowRadioBtnGroupProps };
 
 const RowRadioBtnGroup: React.FC<RowRadioBtnGroupProps> = (props: RowRadioBtnGroupProps) => {
-    // const [value, setValue] = React.useState(props.items[0].value);
-
-    // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setValue(event.target.value);
-    // };
 
     const { items: radioItems } = props;
-    const formCtlLabels = radioItems.length > 0 && radioItems.map((radioItem) => (
-        <FormControlLabel value={radioItem.value} control={<Radio />} label={radioItem.label} />
-    ));
+    const { selIndex, setSelIndex } = props;
+
+    const handleChange = (event: React.SyntheticEvent, checked: boolean) => {
+        if (checked) {
+            setSelIndex(Number((event.target as HTMLInputElement).value));
+        }
+    };
+
+    const formCtlLabels =
+      radioItems.length > 0 &&
+      radioItems.map((radioItem) => (
+        <FormControlLabel
+          value={radioItem.value}
+          control={<Radio />}
+          label={radioItem.label}
+          onChange={handleChange}
+          checked={selIndex === radioItem.value}
+        />
+      ));
 
     return (
       <Box

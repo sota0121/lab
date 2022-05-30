@@ -69,3 +69,34 @@ use this
 
 - React Router v6 tutorial
   - https://reactrouter.com/docs/en/v6/getting-started/tutorial
+
+
+## Solution Note
+
+### Error: Property 'component' does not exist on type 'JSX.IntrinsicElements'.
+
+#### Why this error occurs?
+
+See:
+https://bobbyhadz.com/blog/react-property-does-not-exist-on-type-jsx-intrinsicelements
+
+
+`Component` must be named starts with "Uppercase" .
+
+#### How to fix this error?
+
+Name your component starts with "Uppercase" .
+
+- `component` -> `Component`
+
+
+### Difference of Moving page React Router v5 -> v6
+
+- v5
+  - useHistory
+  - history.push('/')
+- v6
+  - useNavigate
+  - navigate('/')
+
+https://dev.classmethod.jp/articles/react-router-5to6/

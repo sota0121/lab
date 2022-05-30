@@ -3,7 +3,7 @@
 import React, { FC } from 'react';
 
 
-const Manager: FC = () => {
+const Dashboard: FC = () => {
   return (
     <div>
       <h1>Score Counter</h1>
@@ -11,4 +11,4 @@ const Manager: FC = () => {
   );
 }
 
-export default Manager;
+export default Dashboard;

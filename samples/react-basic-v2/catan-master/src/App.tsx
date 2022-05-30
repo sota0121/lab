@@ -22,10 +22,10 @@ import {
   People as PeopleIcon,
 } from '@mui/icons-material';
 
-
 import Home from './components/pages/Home';
-import Manager from './components/pages/Manager';
+import Dashboard from './components/pages/Dashboard';
 import User from './components/pages/Users';
+import CmAppBar from './components/organisms/AppBar';
 
 import './App.css';
 
@@ -80,11 +80,12 @@ const TemporaryDrawer: FC = () => {
 const App: FC = () => {
   return (
     <>
+      <CmAppBar />
       <Router>
         <Routes>
           <Route path="/" element={<Home />}>
           </Route>
-          <Route path="/manager" element={<Manager />}>
+          <Route path="/dashboard" element={<Dashboard />}>
           </Route>
           <Route path="/users" element={<User />}>
           </Route>

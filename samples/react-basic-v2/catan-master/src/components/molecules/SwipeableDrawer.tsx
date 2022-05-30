@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {
   BrowserRouter as Router,
-  NavLink,
+  Outlet,
   Link,
 } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -57,16 +57,19 @@ const SwipeableTemporaryDrawer: React.FC<SwipeableDrawerProps> = (props: Swipeab
       <List>
         {["Start", "Dashboard", "Users"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <PeopleIcon />
-                {/* {index % 2 === 0 ? <PeopleIcon /> : <PeopleIcon />} */}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
+            <Link to={pageMap[index].path}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <PeopleIcon />
+                  {/* {index % 2 === 0 ? <PeopleIcon /> : <PeopleIcon />} */}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
+      <Outlet />
     </Box>
   );
 

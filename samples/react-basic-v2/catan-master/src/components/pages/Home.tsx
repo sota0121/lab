@@ -4,6 +4,7 @@ import React, { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import {
   AppBar,
+  Alert,
   Box,
   Button,
   Grid,
@@ -47,6 +48,7 @@ const Home: FC = () => {
     React.useRef<TextFieldProps>(null), // player 4
   ]
   const [ players, setPlayers ] = React.useState<string[]>([]);
+  const [ alertDisplay, setAlertDisplay ] = React.useState<boolean>(false);
 
   const playerInputs = playerLabels.map((label, index) => (
     (
@@ -71,6 +73,7 @@ const Home: FC = () => {
     // check all inputs are filled
     const inputs = playerNames.map(input => input.current);
     const inputsFilled = inputs.every(input => input?.value !== '');
+    console.log(inputsFilled);
 
     // set player names
     if (inputsFilled) {
@@ -79,9 +82,14 @@ const Home: FC = () => {
         return strName;
       });
       setPlayers(playerNamesExtracted);
+      setAlertDisplay(false);
+      // move to dashboard
+      navigate('/dashboard');
     }
-    // move to dashboard
-    navigate('/dashboard');
+    else {
+      // show error
+      setAlertDisplay(true);
+    }
   };
 
   return (
@@ -112,6 +120,11 @@ const Home: FC = () => {
                 >
                   Start Game
                 </Button>
+                {alertDisplay && (
+                  <Alert severity='error'>
+                    Please fill in all the player names.
+                  </Alert>
+                )}
               </Box>
             </Box>
         </Grid>

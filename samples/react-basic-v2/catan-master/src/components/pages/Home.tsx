@@ -14,9 +14,21 @@ import {
 import { Menu as MenuIcon } from '@mui/icons-material';
 
 import SwipeableTemporaryDrawer from '../molecules/SwipeableDrawer';
+import RowRadioBtnGroup from '../molecules/RowRadioBtn'
+import type { RadioItem, RowRadioBtnGroupProps } from '../molecules/RowRadioBtn'
 
 const Home: FC = () => {
 
+  const radioItems: RadioItem[] = [
+    { label: '3 players', value: '3' },
+    { label: '4 players', value: '4' },
+  ]
+  const [selIndex, setSelIndex] = React.useState(3); // num of players
+  const props: RowRadioBtnGroupProps = {
+    items: radioItems,
+    selIndex,
+    setSelIndex,
+  };
 
   return (
     <>
@@ -24,21 +36,18 @@ const Home: FC = () => {
         <Grid item xs={12}>
             <Box
               sx={{
-                width: '50%',
-                height: '300px',
+                width: '80%',
+                height: '600px',
                 backgroundColor: '#f5f5f5',
                 borderRadius: '0.4rem',
-                '&:hover': {
-                    backgroundColor: 'primary.main',
-                    opacity: [0.9, 0.8, 0.7],
-                },
+                margin: '1rem auto',
               }}
             >
-                <h2>Home</h2>
+              <RowRadioBtnGroup {...props}/>
             </Box>
-            <SwipeableTemporaryDrawer
-              btnLabel="Menu"
-            />
+            <Box>
+              {selIndex}
+            </Box>
         </Grid>
       </Grid>
     </>

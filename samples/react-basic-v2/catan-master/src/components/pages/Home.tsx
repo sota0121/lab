@@ -14,7 +14,6 @@ import {
 import { Menu as MenuIcon } from '@mui/icons-material';
 
 import SwipeableTemporaryDrawer from '../molecules/SwipeableDrawer';
-import TemporaryDrawer from '../molecules/TemporaryDrawer';
 
 const Home: FC = () => {
 
@@ -37,9 +36,9 @@ const Home: FC = () => {
             >
                 <h2>Home</h2>
             </Box>
-            <TemporaryDrawer />
-            <p>------</p>
-            <SwipeableTemporaryDrawer />
+            <SwipeableTemporaryDrawer
+              btnLabel="Menu"
+            />
         </Grid>
       </Grid>
     </>

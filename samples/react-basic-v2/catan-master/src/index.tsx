@@ -5,6 +5,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { PlayerInfoProvider } from './components/providers/PlayerInfoProviders';
+import ThemeProvider from './components/providers/ThemeProvider';
+
 /* eslint-disable */
 
 const root = ReactDOM.createRoot(
@@ -13,7 +16,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <PlayerInfoProvider>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </PlayerInfoProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

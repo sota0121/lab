@@ -13,7 +13,11 @@ import './App.css';
 
 /* eslint-disable */
 
-const App: FC = () => {
+type AppProps = {
+  children?: React.ReactNode;
+};
+
+const App: FC = (props: AppProps) => {
   return (
     <>
       <CmAppBar />

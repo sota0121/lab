@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useContext, memo } from 'react';
 import { useNavigate } from 'react-router';
 import {
   AppBar,
@@ -20,22 +20,39 @@ import { AccountCircle as AccountCircleIcon } from '@mui/icons-material';
 
 import RowRadioBtnGroup from '../molecules/RowRadioBtn'
 import type { RadioItem, RowRadioBtnGroupProps } from '../molecules/RowRadioBtn'
+import { PlayerInfoContext } from '../providers/PlayerInfoProviders';
+import type { PlayerInfoContextType, playerInfoList } from '../providers/PlayerInfoProviders';
 
-const Home: FC = () => {
+const Home: FC = memo(() => {
+  // --------------------------------------------------
+  // Setup State
+  // --------------------------------------------------
+  const [selIndex, setSelIndex] = React.useState(3); // num of players
+  const [playerLabels, setPlayerLabels] = React.useState<string[]>([]);
+  const [ alertDisplay, setAlertDisplay ] = React.useState<boolean>(false);
 
+  // --------------------------------------------------
+  // Preparation
+  // --------------------------------------------------
   const radioItems: RadioItem[] = [
     { label: '3 players', value: 3 },
     { label: '4 players', value: 4 },
   ]
-  const [selIndex, setSelIndex] = React.useState(3); // num of players
   const props: RowRadioBtnGroupProps = {
     items: radioItems,
     selIndex,
     setSelIndex,
   };
+  const navigate = useNavigate();
 
-  const [playerLabels, setPlayerLabels] = React.useState<string[]>([]);
+  // --------------------------------------------------
+  // Seutp Context
+  // --------------------------------------------------
+  const { playerList, setPlayerList } = useContext(PlayerInfoContext) as PlayerInfoContextType;
 
+  // --------------------------------------------------
+  // Asyncronous Processes
+  // --------------------------------------------------
   useEffect(() => {
     selIndex === 3 ? setPlayerLabels(['Player 1', 'Player 2', 'Player 3']) : setPlayerLabels(['Player 1', 'Player 2', 'Player 3', 'Player 4']);
 
@@ -47,9 +64,10 @@ const Home: FC = () => {
     React.useRef<TextFieldProps>(null), // player 3
     React.useRef<TextFieldProps>(null), // player 4
   ]
-  const [ players, setPlayers ] = React.useState<string[]>([]);
-  const [ alertDisplay, setAlertDisplay ] = React.useState<boolean>(false);
 
+  // --------------------------------------------------
+  // Component Functions
+  // --------------------------------------------------
   const playerInputs = playerLabels.map((label, index) => (
     (
       <>
@@ -58,7 +76,6 @@ const Home: FC = () => {
       </>
     )
   ));
-
   const InputsWithIcon = () => {
     return (
       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
@@ -67,22 +84,31 @@ const Home: FC = () => {
     );
   };
 
-  const navigate = useNavigate();
-
+  // --------------------------------------------------
+  // Hnadlers
+  // --------------------------------------------------
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     // check all inputs are filled
     const inputs = playerNames.map(input => input.current);
     const inputsFilled = inputs.every(input => input?.value !== '');
-    console.log(inputsFilled);
 
     // set player names
     if (inputsFilled) {
-      const playerNamesExtracted = playerNames.map(playerName => {
-        const strName: string = playerName.current?.value as string;
-        return strName;
+      const playerListExtracted: playerInfoList = inputs.map((value, index) => {
+        return {
+          name: value?.value as string,
+          id: index,
+        };
       });
-      setPlayers(playerNamesExtracted);
+      console.log(playerListExtracted);
+      setPlayerList(playerListExtracted);
+      // const playerNamesExtracted = playerNames.map(playerName => {
+      //   const strName: string = playerName.current?.value as string;
+      //   return strName;
+      // });
+      // setPlayers(playerNamesExtracted);
       setAlertDisplay(false);
+      console.log(playerList);
       // move to dashboard
       navigate('/dashboard');
     }
@@ -92,6 +118,9 @@ const Home: FC = () => {
     }
   };
 
+  // --------------------------------------------------
+  // Render
+  // --------------------------------------------------
   return (
     <>
       <Grid container spacing={3}>
@@ -131,6 +160,6 @@ const Home: FC = () => {
       </Grid>
     </>
   );
-};
+});
 
 export default Home;

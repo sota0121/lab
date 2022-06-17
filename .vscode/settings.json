@@ -3,5 +3,8 @@
     "go.formatTool": "gofmt",
     "gopls": {
         "experimentalWorkspaceModule": true,
-    }
+    },
+    "deno.enable": true,
+    "deno.lint": true,
+    "deno.unstable": true
 }

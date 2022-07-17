@@ -1,0 +1,12 @@
+{
+  "name": "ts-exercise",
+  "version": "1.0.0",
+  "description": "typescript and javascript exercise",
+  "main": "index.ts",
+  "author": "sota_masuda",
+  "license": "MIT",
+  "scripts": {
+    "exec-node": "ts-node src/index.ts",
+    "exec-deno": "deno run src/index.ts"
+  }
+}

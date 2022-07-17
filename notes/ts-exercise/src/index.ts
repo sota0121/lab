@@ -1,9 +1,9 @@
-const func = (nums: number[]) => {
-  return nums.reduce((acc, curr) => {
-    return acc + curr;
-  }, 0);
+import { mainJsExercise } from './js-ex/index.ts';
+import { mainTsExercise } from './ts-ex/index.ts';
+
+const main = () => {
+  mainJsExercise();
+  mainTsExercise();
 }
 
-const a = [1, 2, 3];
-const ret = func(a);
-console.log(ret);
+main();

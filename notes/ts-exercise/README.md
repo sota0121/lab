@@ -7,3 +7,6 @@
 
 ## How to run script
 
+```bash
+yarn exec-deno
+```
